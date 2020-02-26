@@ -3,11 +3,13 @@ import tensorflow as tf
 IMG_WIDTH = 256
 IMG_HEIGHT = 256
 
+
 def resize_imgs(img, sketch, height, width):
     img = tf.image.resize(img, [height, width])
     sketch = tf.image.resize(sketch, [height, width])
 
     return img, sketch
+
 
 def normalize(img, sketch):
     img = (img / 127.5) - 1
@@ -15,12 +17,14 @@ def normalize(img, sketch):
 
     return img, sketch
 
+
 def random_crop(img, sketch):
     stacked_image = tf.stack([img, sketch], axis=0)
     cropped_image = tf.image.random_crop(
         stacked_image, size=[2, IMG_HEIGHT, IMG_WIDTH, 3])
 
     return cropped_image[0], cropped_image[1]
+
 
 @tf.function()
 def random_jitter(img, sketch):
